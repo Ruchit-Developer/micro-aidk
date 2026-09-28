@@ -31,7 +31,7 @@ When deploying autonomous agents in production environments, developers face two
 
 Install directly from source:
 ```bash
-pip install git+https://github.com/[YOUR-USERNAME]/micro-aidk.git
+pip install git+https://github.com/Ruchit-Developer/micro-aidk.git
 ```
 
 ---
