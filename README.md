@@ -1,33 +1,42 @@
 <div align="center">
-  <h1>🛡️ Micro-AIDK</h1>
-  <p><strong>A production-grade Python SDK to bulletproof your AI Agents.</strong></p>
+  <h1 align="center">[ MICRO-AIDK ]</h1>
+  <p align="center">
+    <code>A production-grade, fault-tolerant Python SDK for autonomous AI pipelines.</code>
+  </p>
+  
+  <p align="center">
+    <img src="https://img.shields.io/badge/Python-3.12-black?style=for-the-badge&logo=python&logoColor=white" />
+    <img src="https://img.shields.io/badge/Google_Gemini-Ready-black?style=for-the-badge&logo=google&logoColor=white" />
+    <img src="https://img.shields.io/badge/OpenAI-Compatible-black?style=for-the-badge&logo=openai&logoColor=white" />
+  </p>
 </div>
 
 ---
 
-## ⚡ The Problem
-When building autonomous AI agents in production, you will inevitably face two critical failures:
-1. **API Rate Limiting (503/429):** The provider's server gets overloaded, instantly crashing your Python thread.
-2. **JSON Hallucinations:** You request a clean JSON response, but the LLM returns broken markdown blocks (e.g., ````json`), breaking your downstream parsing logic.
+## // SYSTEM ARCHITECTURE
+When deploying autonomous agents in production environments, developers face two critical points of failure:
+1. **Upstream Rate Limiting:** APIs throwing `503 Service Unavailable` or `429 Too Many Requests`, resulting in thread termination.
+2. **Data Hallucination:** LLMs returning raw markdown strings instead of valid JSON objects, breaking downstream parsers.
 
-## 🚀 The Solution
-**Micro-AIDK** is a lightweight, drop-in architecture that wraps your AI calls in a protective layer. It is built for absolute production stability.
+`micro-aidk` is a drop-in architectural wrapper that enforces absolute stability.
 
-### Core Architecture
-* 🔄 **Exponential Backoff Engine:** Automatically intercepts `503 Service Unavailable` and `429 Rate Limit` crashes. It calculates an exponential mathematical delay (2s, 4s, 8s) and silently retries the request without killing your application.
-* 🧩 **Universal Adapter Pattern:** Future-proof your codebase. Switch between Gemini, OpenAI, or any custom LLM with a single line of code. No logic rewrites required.
-* 🧹 **Strict JSON Enforcer:** Automatically strips away hallucinated markdown formatting and validates the output into a clean, iterable Python Dictionary.
+### Core Modules
+* **Exponential Backoff Engine:** Intercepts critical server crashes (503/429) at the network layer. Automatically calculates an exponential mathematical delay (2s, 4s, 8s) and re-executes the payload without terminating the host application.
+* **Universal Adapter Pattern:** Decouples the application logic from the LLM provider. Hot-swap between `GeminiProvider` or `OpenAIProvider` dynamically.
+* **Strict JSON Enforcement:** Implements automatic string sanitation to strip out hallucinated markdown and forces the payload into a strictly typed Python Dictionary.
 
 ---
 
-## 📦 Installation
+## // DEPLOYMENT
+
+Install directly from source:
 ```bash
-pip install micro-aidk
+pip install git+https://github.com/[YOUR-USERNAME]/micro-aidk.git
 ```
 
 ---
 
-## 💻 Quick Start: The Universal Engine
+## // EXECUTION PROTOCOL
 
 ```python
 import os
@@ -36,18 +45,18 @@ from micro_aidk.engine import BulletproofAI, GeminiProvider
 
 load_dotenv()
 
-# 1. Initialize the Adapter (Easily swap to OpenAIProvider later)
+# [1] Initialize the Universal Adapter 
 provider = GeminiProvider(api_key=os.getenv("GEMINI_API_KEY"))
 
-# 2. Boot the Engine
+# [2] Boot the Fault-Tolerant Engine
 ai_engine = BulletproofAI(provider=provider)
 
-# 3. Fire the request. The Engine handles 503 errors and JSON validation silently.
+# [3] Execute payload. Engine handles all 503 errors and JSON validation silently.
 prompt = "Generate a dummy user profile with name and age."
-result = ai_engine.force_json(prompt)
+payload = ai_engine.force_json(prompt)
 
-print(result['name']) 
+print(payload['name']) 
 ```
 
 ---
-*Built for absolute resilience in autonomous systems.*
+*Maintained for autonomous systems requiring 99.9% uptime.*
